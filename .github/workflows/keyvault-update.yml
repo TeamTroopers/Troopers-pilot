@@ -32,4 +32,3 @@ jobs:
         # Example commands
         az group list --output table
         az vm list --output table
-        # Add other commands as needed
