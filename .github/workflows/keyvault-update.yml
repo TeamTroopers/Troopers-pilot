@@ -35,10 +35,14 @@ jobs:
 
     - name: Delete expired secrets
       run: |
+        # Set the current date in ISO 8601 format
+        current_date=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+        
         # List expired secrets
-        expired_secrets=$(az ad app credential list --id e62844f4-ae87-4dc4-97cb-75677079ac8e --query "[?endDate < '$(date -u +%Y-%m-%dT%H:%M:%SZ')'].[id]" -o tsv)
-
+        expired_secrets=$(az ad app credential list --id e62844f4-ae87-4dc4-97cb-75677079ac8e --query "[?endDate < '$current_date'].[id]" -o tsv)
+        
         # Delete each expired secret
         for secret_id in $expired_secrets; do
+          echo "Deleting secret: $secret_id"
           az ad app credential delete --id e62844f4-ae87-4dc4-97cb-75677079ac8e --key-id $secret_id
         done
