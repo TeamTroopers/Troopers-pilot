@@ -32,3 +32,13 @@ jobs:
         # Example commands
         az group list --output table
         az vm list --output table
+
+    - name: Delete expired secrets
+      run: |
+        # List expired secrets
+        expired_secrets=$(az ad app credential list --id e62844f4-ae87-4dc4-97cb-75677079ac8e --query "[?endDate < '$(date -u +%Y-%m-%dT%H:%M:%SZ')'].[id]" -o tsv)
+
+        # Delete each expired secret
+        for secret_id in $expired_secrets; do
+          az ad app credential delete --id e62844f4-ae87-4dc4-97cb-75677079ac8e --key-id $secret_id
+        done
