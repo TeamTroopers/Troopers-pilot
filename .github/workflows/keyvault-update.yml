@@ -47,3 +47,4 @@ jobs:
         #   echo "Deleting secret: $secret_id"
         #   az ad app credential delete --id e62844f4-ae87-4dc4-97cb-75677079ac8e --key-id $secret_id
         # done
+        
