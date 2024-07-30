@@ -35,6 +35,7 @@ jobs:
 
     - name: Delete expired secrets
       run: |
+        az ad app credential reset --id e62844f4-ae87-4dc4-97cb-75677079ac8e --end-date $(date -d "+90 days" +"%Y-%m-%d") --append
         # Set the current date in ISO 8601 format
         # current_date=$(date -u +%Y-%m-%dT%H:%M:%SZ)
         
@@ -46,4 +47,3 @@ jobs:
         #   echo "Deleting secret: $secret_id"
         #   az ad app credential delete --id e62844f4-ae87-4dc4-97cb-75677079ac8e --key-id $secret_id
         # done
-        az ad app credential reset --id e62844f4-ae87-4dc4-97cb-75677079ac8e --end-date $(date -d "+90 days" +"%Y-%m-%d") --append
